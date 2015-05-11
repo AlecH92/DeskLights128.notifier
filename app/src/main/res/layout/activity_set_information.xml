@@ -1,0 +1,117 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.hilltoprobotics.dl128notifier.SetInformation">
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enable"
+        android:id="@+id/enabledCheck"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:checked="false" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/xValue"
+        android:layout_alignBaseline="@+id/xLabel"
+        android:layout_toRightOf="@+id/enabledCheck"
+        android:hint="1"
+        android:maxLength="3"
+        android:numeric="integer"
+        android:width="50dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="X Initial"
+        android:id="@+id/xLabel"
+        android:layout_below="@+id/enabledCheck"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="36dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Y Initial"
+        android:id="@+id/yLabel"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/xLabel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/yValue"
+        android:hint="1"
+        android:maxLength="3"
+        android:numeric="integer"
+        android:width="50dp"
+        android:layout_alignBaseline="@+id/yLabel"
+        android:layout_toRightOf="@+id/enabledCheck"
+        android:layout_toEndOf="@+id/yLabel" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="X End"
+        android:id="@+id/xLabelE"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/yLabel" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/xValueE"
+        android:hint="1"
+        android:maxLength="3"
+        android:numeric="integer"
+        android:width="50dp"
+        android:layout_toRightOf="@+id/enabledCheck"
+        android:layout_toEndOf="@+id/enabledCheck"
+        android:layout_alignBaseline="@+id/xLabelE" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Y End"
+        android:id="@+id/yLabelE"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/xLabelE"
+        android:layout_marginTop="25dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/yValueE"
+        android:hint="1"
+        android:maxLength="3"
+        android:numeric="integer"
+        android:width="50dp"
+        android:layout_alignBaseline="@+id/yLabelE"
+        android:layout_toRightOf="@+id/enabledCheck"
+        android:layout_toEndOf="@+id/enabledCheck" />
+
+</RelativeLayout>

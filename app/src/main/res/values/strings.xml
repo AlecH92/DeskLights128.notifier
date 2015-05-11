@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">DL128Notifier</string>
+    <string name="title_activity_main">DL128Notifier Settings</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_set_information">Settings for Activity</string>
+</resources>
