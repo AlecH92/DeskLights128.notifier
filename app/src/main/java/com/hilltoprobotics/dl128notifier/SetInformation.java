@@ -1,47 +1,47 @@
 package com.hilltoprobotics.dl128notifier;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.StringReader;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
+
+import yuku.ambilwarna.AmbilWarnaDialog;
 
 
 public class SetInformation extends ActionBarActivity {
     String theTitle = "";
     String pkgInfo = "";
+    Button colorSelect;
+    ImageView thisColorView;
     CheckBox enabledCheck;
     EditText xInitial;
     EditText xEnd;
     EditText yInitial;
     EditText yEnd;
     HashMap<String, String> theMap;
-    SharedPreferences sharedPref;
-    SharedPreferences.Editor editor;
     FileOutputStream fileOut;
     FileInputStream fileIn;
+    public AmbilWarnaDialog dialog;
+    public int theColor = -12303292;
+    int initialColor = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,8 @@ public class SetInformation extends ActionBarActivity {
         xEnd = (EditText) findViewById(R.id.xValueE);
         yInitial = (EditText) findViewById(R.id.yValue);
         yEnd = (EditText) findViewById(R.id.yValueE);
+        colorSelect = (Button) findViewById(R.id.colorSelect);
+        thisColorView = (ImageView) findViewById(R.id.colorView);
         theTitle = getIntent().getStringExtra("title");
         pkgInfo = getIntent().getStringExtra("pkgName");
         Log.d("DL128", pkgInfo);
@@ -84,13 +86,16 @@ public class SetInformation extends ActionBarActivity {
             xEnd.setText(theMap.get("xEnd"));
             yInitial.setText(theMap.get("yInitial"));
             yEnd.setText(theMap.get("yEnd"));
+            thisColorView.setImageDrawable(new ColorDrawable(Integer.parseInt(theMap.get("color"))));
+            initialColor = Integer.parseInt(theMap.get("color"));
+            theColor = initialColor;
             theMap.clear();
         } catch (IOException e) {
             theMap.put("checked","n");
             theMap.put("xInitial","0");
             theMap.put("xEnd","0");
             theMap.put("yInitial","0");
-            theMap.put("yEnd","0");
+            theMap.put("yEnd", "0");
             enabledCheck.setChecked(false);
             xInitial.setText("0");
             xEnd.setText("0");
@@ -105,6 +110,13 @@ public class SetInformation extends ActionBarActivity {
         theMap.put("xEnd","0");
         theMap.put("yInitial","0");
         theMap.put("yEnd","0");
+
+        colorSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
+            }
+        });
 
         enabledCheck.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +147,18 @@ public class SetInformation extends ActionBarActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 checkData();
                 return false;
+            }
+        });
+
+        dialog = new AmbilWarnaDialog(this, initialColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+            @Override
+            public void onOk(AmbilWarnaDialog dialog, int color) {
+                theColor = color;
+                thisColorView.setImageDrawable(new ColorDrawable(theColor));
+            }
+
+            @Override
+            public void onCancel(AmbilWarnaDialog dialog) {
             }
         });
     }
@@ -189,30 +213,31 @@ public class SetInformation extends ActionBarActivity {
         } else {
             theMap.put("checked","n");
         }
-        if(xInitial.getText().toString() == "") {
+        if(xInitial.getText().toString().equals("")) {
             theMap.put("xInitial","0");
         }
         else {
             theMap.put("xInitial", xInitial.getText().toString());
         }
-        if(xEnd.getText().toString() == "") {
+        if(xEnd.getText().toString().equals("")) {
             theMap.put("xEnd","0");
         }
         else {
             theMap.put("xEnd", xEnd.getText().toString());
         }
-        if(xInitial.getText().toString() == "") {
+        if(xInitial.getText().toString().equals("")) {
             theMap.put("yInitial","0");
         }
         else {
             theMap.put("yInitial", yInitial.getText().toString());
         }
-        if(xInitial.getText().toString() == "") {
+        if(xInitial.getText().toString().equals("")) {
             theMap.put("yEnd", "0");
         }
         else {
             theMap.put("yEnd", yEnd.getText().toString());
         }
+        theMap.put("color", String.valueOf(theColor));
         try {
             deleteFile(pkgInfo);
             fileOut = openFileOutput(pkgInfo, MODE_PRIVATE);

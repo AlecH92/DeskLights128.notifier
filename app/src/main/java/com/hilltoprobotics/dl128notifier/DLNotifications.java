@@ -43,7 +43,7 @@ public class DLNotifications extends AccessibilityService {
 
                 if(theMap.get("checked").equals("y")) {
                     Log.d("DL128","checkedTrue");
-                    String whatToSend = "alertArea?h=" + "33FFCC" /*Integer.toHexString(activity.theColor).toUpperCase().substring(2)*/
+                    String whatToSend = "alertArea?h=" + Integer.toHexString(Integer.parseInt(theMap.get("color"))).toUpperCase().substring(2)
                             + "&x=" + theMap.get("xInitial")+ "&y=" + theMap.get("yInitial")
                             + "&c=" + theMap.get("xEnd")+ "&u=" + theMap.get("yEnd");
                     sendData(whatToSend);
@@ -68,7 +68,8 @@ public class DLNotifications extends AccessibilityService {
     }
 
     void sendData(String theData) {
-        String url = "http://" + sharedPrefs.getString("prefIP", "192.168.1.111") + "/" + theData;
+        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String url = "http://" + sharedPrefs.getString("prefIP", "127.0.0.1") + "/" + theData;
         Log.d("DL128","Sending data: " + url);
         final ThreadedRequest tReq = new ThreadedRequest(url);
         tReq.start(new Runnable() {

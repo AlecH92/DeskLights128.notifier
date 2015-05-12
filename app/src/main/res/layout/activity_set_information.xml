@@ -114,4 +114,24 @@
         android:layout_toRightOf="@+id/enabledCheck"
         android:layout_toEndOf="@+id/enabledCheck" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Color"
+        android:id="@+id/colorSelect"
+        android:layout_below="@+id/yLabelE"
+        android:layout_toRightOf="@+id/yValueE"
+        android:layout_toEndOf="@+id/yValueE" />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="38dp"
+        android:id="@+id/colorView"
+        android:layout_toRightOf="@+id/colorSelect"
+        android:layout_toEndOf="@+id/colorSelect"
+        android:layout_alignTop="@+id/yLabelE"
+        android:layout_marginTop="28dp"
+        android:background="#d3ada7a7" />
+
 </RelativeLayout>
