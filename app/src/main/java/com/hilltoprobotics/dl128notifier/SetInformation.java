@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.io.FileInputStream;
@@ -30,6 +31,8 @@ public class SetInformation extends ActionBarActivity {
     String theTitle = "";
     String pkgInfo = "";
     Button colorSelect;
+    Switch customCommandSwitch;
+    EditText customCommand;
     ImageView thisColorView;
     CheckBox enabledCheck;
     EditText xInitial;
@@ -55,6 +58,8 @@ public class SetInformation extends ActionBarActivity {
         yEnd = (EditText) findViewById(R.id.yValueE);
         colorSelect = (Button) findViewById(R.id.colorSelect);
         thisColorView = (ImageView) findViewById(R.id.colorView);
+        customCommand = (EditText) findViewById(R.id.customCommand);
+        customCommandSwitch = (Switch) findViewById(R.id.customCommandSwitch);
         theTitle = getIntent().getStringExtra("title");
         pkgInfo = getIntent().getStringExtra("pkgName");
         Log.d("DL128", pkgInfo);
@@ -74,14 +79,7 @@ public class SetInformation extends ActionBarActivity {
             }
             Log.d("Dl128", "aftermap " + theMap.toString());
 
-            if(theMap.get("checked").equals("y")) {
-                Log.d("DL128","checkedTrue");
-                enabledCheck.setChecked(true);
-            }
-            else {
-                Log.d("DL128","checkedFalse");
-                enabledCheck.setChecked(false);
-            }
+            enabledCheck.setChecked(Boolean.valueOf(theMap.get("checked")));
             xInitial.setText(theMap.get("xInitial"));
             xEnd.setText(theMap.get("xEnd"));
             yInitial.setText(theMap.get("yInitial"));
@@ -89,9 +87,11 @@ public class SetInformation extends ActionBarActivity {
             thisColorView.setImageDrawable(new ColorDrawable(Integer.parseInt(theMap.get("color"))));
             initialColor = Integer.parseInt(theMap.get("color"));
             theColor = initialColor;
+            customCommandSwitch.setChecked(Boolean.valueOf(theMap.get("customCommandSwitch")));
+            customCommand.setText(theMap.get("customCommand"));
             theMap.clear();
         } catch (IOException e) {
-            theMap.put("checked","n");
+            theMap.put("checked","false");
             theMap.put("xInitial","0");
             theMap.put("xEnd","0");
             theMap.put("yInitial","0");
@@ -109,7 +109,7 @@ public class SetInformation extends ActionBarActivity {
         theMap.put("xInitial","0");
         theMap.put("xEnd","0");
         theMap.put("yInitial","0");
-        theMap.put("yEnd","0");
+        theMap.put("yEnd", "0");
 
         colorSelect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,11 +208,7 @@ public class SetInformation extends ActionBarActivity {
     }
 
     void checkData() {
-        if (enabledCheck.isChecked()) {
-            theMap.put("checked", "y");
-        } else {
-            theMap.put("checked","n");
-        }
+        theMap.put("checked",String.valueOf(enabledCheck.isChecked()));
         if(xInitial.getText().toString().equals("")) {
             theMap.put("xInitial","0");
         }
@@ -238,6 +234,8 @@ public class SetInformation extends ActionBarActivity {
             theMap.put("yEnd", yEnd.getText().toString());
         }
         theMap.put("color", String.valueOf(theColor));
+        theMap.put("customCommand",customCommand.getText().toString());
+        theMap.put("customCommandSwitch",String.valueOf(customCommandSwitch.isChecked()));
         try {
             deleteFile(pkgInfo);
             fileOut = openFileOutput(pkgInfo, MODE_PRIVATE);

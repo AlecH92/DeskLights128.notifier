@@ -41,12 +41,18 @@ public class DLNotifications extends AccessibilityService {
                 }
                 Log.d("Dl128", "aftermap " + theMap.toString());
 
-                if(theMap.get("checked").equals("y")) {
-                    Log.d("DL128","checkedTrue");
-                    String whatToSend = "alertArea?h=" + Integer.toHexString(Integer.parseInt(theMap.get("color"))).toUpperCase().substring(2)
-                            + "&x=" + theMap.get("xInitial")+ "&y=" + theMap.get("yInitial")
-                            + "&c=" + theMap.get("xEnd")+ "&u=" + theMap.get("yEnd");
-                    sendData(whatToSend);
+                if(theMap.get("checked").equals("true")) {
+                    Log.d("DL128", "checkedTrue");
+                    if(theMap.get("customCommandSwitch").equals("true")) {
+                        String whatToSend = theMap.get("customCommand");
+                        sendData(whatToSend);
+                    }
+                    else {
+                        String whatToSend = "alertArea?h=" + Integer.toHexString(Integer.parseInt(theMap.get("color"))).toUpperCase().substring(2)
+                                + "&x=" + theMap.get("xInitial")+ "&y=" + theMap.get("yInitial")
+                                + "&c=" + theMap.get("xEnd")+ "&u=" + theMap.get("yEnd");
+                        sendData(whatToSend);
+                    }
                 }
                 else {
                     Log.d("DL128","checkedFalse");
